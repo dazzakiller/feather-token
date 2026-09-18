@@ -35,20 +35,20 @@
   <p class="line"><b>4.2 ETH</b> to freedom.</p>
   <p class="count" id="grad">—</p>
   <div class="links">
-    <a href="GMGN_URL" id="buy">Buy on GMGN</a>
-    <a href="DS_URL" id="chart">Chart</a>
+    <a href="https://gmgn.ai/robinhood/token/0x08a99637F332a9f53693BF3F449aE3E3f0710C22" id="buy">Buy on GMGN</a>
+    <a href="https://dexscreener.com/robinhood/0x08a99637F332a9f53693BF3F449aE3E3f0710C22" id="chart">Chart</a>
     <a href="https://x.com/featheronrh">X</a>
     <a href="https://t.me/featheronrh">Telegram</a>
   </div>
   <p class="fine">$FEATHER is a memecoin with no utility, no roadmap and no promises. Liquidity is 95% burned at Pons graduation. Only spend what you'd happily light on fire.</p>
 <script>
   // graduation progress: 4.2 ETH raised on the Pons curve — filled at launch with the real curve address
-  const CURVE_ADDRESS = "__CURVE_ADDRESS__";
-  const RPC = "__RPC_URL__";
+  const CURVE_ADDRESS = "";
+  const RPC = "https://rpc.mainnet.chain.robinhood.com";
   async function tick() {
     try {
       const r = await fetch(RPC, { method:"POST", headers:{ "content-type":"application/json" },
-        body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_call", params:[{ to: CURVE_ADDRESS, data: "0x18160ddd" }, "latest"] }) });
+        body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_call", params:[{ to: CURVE_ADDRESS, data: "0x4f1f58fd" }, "latest"] }) });
       const j = await r.json();
       const raised = parseInt(j.result, 16) / 1e18;
       document.getElementById("grad").textContent = raised.toFixed(2) + " / 4.2 ETH raised 🪶";
