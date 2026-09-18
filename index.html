@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$FEATHER — the chain that never sleeps</title>
+<meta property="og:title" content="$FEATHER 🪶">
+<meta property="og:description" content="Every wallet checks the feather. The feather doesn't rug. 4.2 ETH to freedom.">
+<style>
+  :root { --bg:#0a0e1a; --ink:#e8edf7; --dim:#8b96ad; --blue:#38bdf8; }
+  * { margin:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+         min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+         text-align:center; padding:2rem; overflow-x:hidden; }
+  .feather { font-size:clamp(4rem,14vw,9rem); line-height:1; filter:drop-shadow(0 0 24px rgba(56,189,248,.45));
+             animation:sway 4s ease-in-out infinite; }
+  @keyframes sway { 0%,100%{transform:rotate(-6deg)} 50%{transform:rotate(6deg)} }
+  h1 { font-size:clamp(2.4rem,8vw,4.5rem); letter-spacing:.04em; margin:1rem 0 .5rem; }
+  h1 span { color:var(--blue); }
+  p.tag { color:var(--dim); font-size:clamp(1rem,3vw,1.25rem); max-width:34rem; line-height:1.6; }
+  p.line { margin-top:1.4rem; font-size:clamp(1.1rem,3.4vw,1.4rem); }
+  p.line b { color:var(--blue); }
+  .links { margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .links a { color:var(--ink); text-decoration:none; border:1px solid #223; border-radius:999px;
+             padding:.7rem 1.4rem; font-size:.95rem; transition:border-color .2s, transform .2s; }
+  .links a:hover { border-color:var(--blue); transform:translateY(-2px); }
+  .fine { margin-top:3rem; color:#4a5468; font-size:.8rem; max-width:30rem; line-height:1.5; }
+  .count { margin-top:.6rem; color:var(--dim); font-size:.9rem; }
+</style>
+</head>
+<body>
+  <div class="feather">🪶</div>
+  <h1>$<span>FEATHER</span></h1>
+  <p class="tag">Every day, hundreds of thousands of wallets check a little blue feather to make sure they're home.<br>The feather doesn't rug. Doesn't tax. Doesn't sleep.</p>
+  <p class="line"><b>4.2 ETH</b> to freedom.</p>
+  <p class="count" id="grad">—</p>
+  <div class="links">
+    <a href="GMGN_URL" id="buy">Buy on GMGN</a>
+    <a href="DS_URL" id="chart">Chart</a>
+    <a href="https://x.com/featheronrh">X</a>
+    <a href="https://t.me/featheronrh">Telegram</a>
+  </div>
+  <p class="fine">$FEATHER is a memecoin with no utility, no roadmap and no promises. Liquidity is 95% burned at Pons graduation. Only spend what you'd happily light on fire.</p>
+<script>
+  // graduation progress: 4.2 ETH raised on the Pons curve — filled at launch with the real curve address
+  const CURVE_ADDRESS = "__CURVE_ADDRESS__";
+  const RPC = "__RPC_URL__";
+  async function tick() {
+    try {
+      const r = await fetch(RPC, { method:"POST", headers:{ "content-type":"application/json" },
+        body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_call", params:[{ to: CURVE_ADDRESS, data: "0x18160ddd" }, "latest"] }) });
+      const j = await r.json();
+      const raised = parseInt(j.result, 16) / 1e18;
+      document.getElementById("grad").textContent = raised.toFixed(2) + " / 4.2 ETH raised 🪶";
+    } catch { document.getElementById("grad").textContent = "4.2 ETH to freedom 🪶"; }
+  }
+  tick(); setInterval(tick, 30000);
+</script>
+</body>
+</html>
